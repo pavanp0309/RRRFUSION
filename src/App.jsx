@@ -1,10 +1,12 @@
 import React from 'react'
-import MainLayout from './components/common/MainLayout'
+import Approutes from './routes/Approutes'
 
 
 const App = () => {
   return (
-   <MainLayout/>
+  <>
+  <Approutes/>
+  </>
   )
 }
 

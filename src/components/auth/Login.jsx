@@ -2,14 +2,19 @@
   import React from 'react';
   import { Form, Input, Button, Row, Col } from 'antd';
   import SocialLogin from './SocialNetwork';
+  import useAuth from '../../hooks/useAuth';
+  import { useNavigate } from 'react-router-dom';
    import '../../styles/login.css';  
  
 
   const SignIn = () => {
-  
+     let navigate=useNavigate()
+     let {Login}=useAuth()
   
     const onFinish = async (values) => {
-     
+      const {email,password}=values
+      await Login(email ,password)
+      navigate("/")
     };
   
     const onFinishFailed = (errorInfo) => {
@@ -25,7 +30,7 @@
               <p>
                 If you don’t have an account, create one to access all our features.
               </p>
-              <Button type="primary" className="create-account-btn" >
+              <Button type="primary" className="create-account-btn" onClick={()=>navigate('/register')} >
                 Create Account
               </Button>
             </Col>

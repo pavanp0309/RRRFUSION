@@ -1,16 +1,28 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, Row, Col } from 'antd';
-
 import SocialLogin from './SocialNetwork';
-import '../../styles/Register.css';  
+import useAuth from '../../hooks/useAuth';
+import '../../styles/Register.css';
+
 
 
 
 const SignUp = () => {
- 
+
+  const navigate = useNavigate()
+  // distructuring register for useAUth custom hook
+  const { Register } = useAuth()
 
   const onFinish = async (values) => {
- 
+    try {
+      const { fullName, email, password, mobileNumber } = values
+      await Register(fullName, email, password, mobileNumber)
+      //  navigating back to signin on successfull register
+      navigate("/signin")
+    } catch (error) {
+      console.log("failed to register", error.message)
+    }
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -27,7 +39,7 @@ const SignUp = () => {
             <p>
               If you already have an account with us, let's sign in to see something awesome!
             </p>
-            <Button type="primary" className="existing-account-btn" >
+            <Button type="primary" className="existing-account-btn"  onClick={()=>navigate("/signin")}>
               Use your existing account
             </Button>
           </Col>
